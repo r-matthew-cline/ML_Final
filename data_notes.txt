@@ -1,0 +1,4 @@
+Notes from messing with the data
+
+The target class is fairly unbalanced. There are 573,518 negative rows, and only 21,649 positive rows.
+
