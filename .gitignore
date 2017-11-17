@@ -1,4 +1,4 @@
-*.csv
-*.png
-*.jpg
-*.pgm
+*.csv*
+*.png*
+*.jpg*
+*.pgm*
