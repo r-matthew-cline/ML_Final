@@ -56,12 +56,14 @@ def scaleFeatures(data, exceptions):
 
 
 ####### READ IN THE DATA SET #######
+print("Reading in the data from the csv file...")
 data = pd.read_csv('train.csv') # Assumes that the data is in the PWD
 data = shuffleData(data)
 train, val, test = splitData(data)
 
-trainFeatures = train.iloc[38:1339,2:]
-trainLabels = train.iloc[38:1339:,1]
+trainFeatures = train.iloc[:int(train.shape[0]/2),2:]
+trainLabels = train.iloc[:int(train.shape[0]/2),1]
+print("Using first %d rows to train..." % int(train.shape[0]/2))
 
 valFeatures = val.iloc[:,2:]
 valLabels = val.iloc[:,1]
@@ -75,16 +77,31 @@ testLabels = test.iloc[:,1]
 
 clf = svm.SVC()
 clf.fit(trainFeatures, trainLabels)
+print("Training has completed successfully.\n\n")
+print("Making predictions on the test set...\n\n")
 predictions = clf.predict(testFeatures)
-print(predictions)
 
 correct = 0
+tp = 0
+fp = 0
+tn = 0
+fn = 0
 for prediction, label in zip(predictions, testLabels):
-    if prediction == label:
-        correct += 1
+    if prediction == 1 and label == 1:
+        tp = tp + 1
+    elif prediction == 1 and label == 0:
+        fp = fp + 1
+    elif prediction == 0 and label == 0:
+        tn = tn + 1
+    elif prediction == 0 and label == 1:
+        fn = fn + 1
 
-accuracy = correct / len(predictions) * 100
+accuracy = (tp + tn) / len(predictions) * 100
 print("Accuracy: ", accuracy, "%\n")
+print("True Positive: ", tp)
+print("True Negative: ", tn)
+print("False Positive: ", fp)
+print("False Negative: ", fn)
 
 
 
