@@ -113,7 +113,6 @@ def neural_network_model(data, threshold=0.5):
     l3 = tf.add(tf.matmul(l2, hidden_2_layer['weights']), hidden_3_layer['biases'])
     l3 = tf.nn.relu(l3)
     output = tf.add(tf.matmul(l3, output_layer['weights']), output_layer['biases'])
-    output = tf.nn.relu(output)
 
     # for answer in output:
     #     if answer >= threshold:
